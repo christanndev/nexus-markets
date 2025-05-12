@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+
+        <link rel="stylesheet" href="Fonts/druk_cyr/stylesheet.css">
+        <link rel="stylesheet" href="Fonts/gilroy/stylesheet.css">
+        <link rel="stylesheet" href="Fonts/gilroy/style.css">
+        <link rel="stylesheet" href="Fonts/sf/loader.css">
+
+        <link rel="stylesheet" href="styles.css">
+
+        <link rel="stylesheet" href="https://kit-pro.fontawesome.com/releases/v6.3.0/css/pro.min.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    </head>
+
+    <body>
+        <div class="Markets" v-if = "active" :style = "{zoom: zoom}" :class="{'Open': active}">
+            <div class="Markets-Column">
+                <div class="Top">
+                    <div class="Upper">
+                        <div class="TitlePart">
+                            <div class="BigTxt">Market</div>
+                            <div class="Desc">De la acest magazin iti poti achizitiona lucruri utile, atat mancare,  cat si apa pentru a te mentine hidratat pe tot restul zilei.</div>
+                        </div>
+                        <div class="ExitBtn" @click = "closeUI">
+                            <span>Exit</span>
+                            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11 0C4.939 0 0 4.939 0 11C0 17.061 4.939 22 11 22C17.061 22 22 17.061 22 11C22 4.939 17.061 0 11 0ZM14.696 13.53C15.015 13.849 15.015 14.377 14.696 14.696C14.531 14.861 14.322 14.938 14.113 14.938C13.904 14.938 13.695 14.861 13.53 14.696L11 12.166L8.47 14.696C8.305 14.861 8.096 14.938 7.887 14.938C7.678 14.938 7.469 14.861 7.304 14.696C6.985 14.377 6.985 13.849 7.304 13.53L9.834 11L7.304 8.47C6.985 8.151 6.985 7.623 7.304 7.304C7.623 6.985 8.151 6.985 8.47 7.304L11 9.834L13.53 7.304C13.849 6.985 14.377 6.985 14.696 7.304C15.015 7.623 15.015 8.151 14.696 8.47L12.166 11L14.696 13.53Z" fill="white"/></svg>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="Bottom">
+                    <div class="Items">
+                        <div class="Item" v-for = "(data, index) in MarketItems">
+                            <img :src="'img/' + index + '.png'" alt="" draggable="false">
+                            <img class="BluredItem" :src="'img/' + index + '.png'" alt="" draggable="false">
+
+                            <span class="Price">{{data[1]}}$</span>
+                            
+                            <div class="ItemData">
+                                <span>{{data[0]}}</span>
+                                <span>{{data[2]}}</span>
+                            </div>
+
+                            <div class="Cos" v-on:mousedown="addOrRemove($event, data[0], index)">
+                                <i class="fa-regular fa-bag-shopping"></i>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="Bsket">
+                        <div class="Title">
+                            <div class="BigTxt">SHOPPING</div>
+                            <div class="Secons">cart</div>
+                        </div>
+                        <div class="Products">
+                            <div class="Product" v-for = "(data, index) in Bsket">
+                                <div class="ItemInfo">
+                                    <div class="ItemImg">
+                                        <img :src="'img/' + data.label + '.png'" alt="" draggable="false">
+                                        <img class="BluredItem" :src="'img/' + data.label + '.png'" alt="" draggable="false">
+                                    </div>
+                                    <div class="ItemName">
+                                        <span>{{data.name}}</span>
+                                        <span>{{data.category}}</span>
+                                    </div>
+                                </div>
+                                <div class="ItemAmount">
+                                    <span><span style="color: rgba(255, 255, 255, 0.5);">x</span>{{data.amount}}</span>
+                                    <div class="Icon" v-on:mousedown="addOrRemove($event, data.name, data.label)">
+                                        <i class="fa-regular fa-bag-shopping"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="Payment">
+                            <div class="PaymentMethod" @click = "buy('Cash')">
+                                <i class="fa-regular fa-wallet"></i>
+                                <span>Cash</span>
+                            </div>
+
+                            <div class="PaymentMethod" @click = "buy('Card')">
+                                <i class="fa-solid fa-credit-card"></i>
+                                <span>Card</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="js.js"></script>
+    </body>
+</html>
